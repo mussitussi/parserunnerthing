@@ -7,23 +7,34 @@ namespace ParseMeToo.Infrastructure
 {
     public class CommandParseRunnerThing
     {
-        private Dictionary<Type, dynamic> _cmdToCmdHandler = new Dictionary<Type, dynamic>();
+        private Dictionary<Type, dynamic> _commandToHandlerMap = new Dictionary<Type, dynamic>();
 
-        public void Add<T>(ICommandOptionHandler<T> handler) where T : ICommandOption
+        public void Add<T>(ICommandHandler<T> handler) where T : ICommand
         {
-            Type cmdType = typeof(T);
-            _cmdToCmdHandler[cmdType] = (dynamic) handler;
+            _commandToHandlerMap[typeof(T)] = handler;
         }
 
         public IResult RunMe(params string[] args)
         {
-            Type[] ts = _cmdToCmdHandler.Keys.ToArray();
+            Type[] ts = _commandToHandlerMap.Keys.ToArray();
 
-            var parser = Parser.Default.ParseArguments(args, ts);
-            parser.WithParsed<dynamic>(x => _cmdToCmdHandler[x.GetType()].Handle(x));
-            parser.WithNotParsed(x => Console.WriteLine("hej mor der var en fejl"));
-            return null;
+            var parserResult = Parser.Default.ParseArguments(args, ts);
+            var result = parserResult
+                .MapResult(parsedFunc: x => _HandleParsed(x),
+                           notParsedFunc: x => _HandleNotParsedFunc(x));
+
+            return result;
         }
 
+        private IResult _HandleNotParsedFunc(IEnumerable<Error> x)
+        {
+            return new Result {Success = false };
+        }
+
+        private IResult _HandleParsed(dynamic x)
+        {
+            var handler = _commandToHandlerMap[x.GetType()];
+            return handler.Handle(x);
+        }
     }
 }

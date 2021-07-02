@@ -1,6 +1,6 @@
 namespace ParseMeToo.Infrastructure
 {
-    public interface ICommandOptionHandler<T> where T : ICommandOption
+    public interface ICommandHandler<T> where T : ICommand
     {
         IResult Handle(T command);
     }

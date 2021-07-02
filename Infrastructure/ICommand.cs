@@ -1,4 +1,4 @@
 namespace ParseMeToo.Infrastructure
 {
-    public interface ICommandOption { }
+    public interface ICommand { }
 }

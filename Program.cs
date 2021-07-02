@@ -1,4 +1,6 @@
-﻿using ParseMeToo.Infrastructure;
+﻿using System;
+using System.Text.Json;
+using ParseMeToo.Infrastructure;
 using ParseMeToo.Messages;
 
 namespace ParseMeToo
@@ -11,7 +13,9 @@ namespace ParseMeToo
 
             grr.Add(new CommitHandler());
             grr.Add(new AddHandler());
+
             var result = grr.RunMe(args);
+            Console.WriteLine($"result = {JsonSerializer.Serialize(result)}");
         }
     }
 }

@@ -5,14 +5,14 @@ using ParseMeToo.Infrastructure;
 namespace ParseMeToo.Messages
 {
 
-    
-    public class CommitHandler : ICommandOptionHandler<Commit>
+
+    public class CommitHandler : ICommandHandler<Commit>
     {
-        public IResult Handle(Commit commit)
+        public IResult Handle(Commit command)
         {
-            var x = JsonSerializer.Serialize(new { commit });
-            Console.WriteLine(x);
-            return new Result { Success=true};
+            var txt = command.GetType().Name + ": " + JsonSerializer.Serialize(command);
+            Console.WriteLine("Handling: " + txt);
+            return new Result { Success = true };
         }
     }
 }

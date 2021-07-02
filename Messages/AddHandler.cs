@@ -4,14 +4,13 @@ using System.Text.Json;
 
 namespace ParseMeToo.Messages
 {
-    public class AddHandler : ICommandOptionHandler<Add> 
+    public class AddHandler : ICommandHandler<Add> 
     {
-        public IResult Handle(Add add)
+        public IResult Handle(Add command)
         {
-            var x = JsonSerializer.Serialize(new { add });
-            Console.WriteLine(x);
+            var txt = command.GetType().Name + ": " + JsonSerializer.Serialize(command);
+            Console.WriteLine(txt);
             return new Result { Success = false };
         }
     }
-
 }
