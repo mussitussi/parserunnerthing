@@ -14,27 +14,28 @@ namespace ParseMeToo.Infrastructure
             _commandToHandlerMap[typeof(T)] = handler;
         }
 
-        public IResult RunMe(params string[] args)
+        public Result RunMe(params string[] args)
         {
             Type[] ts = _commandToHandlerMap.Keys.ToArray();
 
             var parserResult = Parser.Default.ParseArguments(args, ts);
             var result = parserResult
-                .MapResult(parsedFunc: x => _HandleParsed(x),
-                           notParsedFunc: x => _HandleNotParsedFunc(x));
+                .MapResult(x => _HandleParsed(x),
+                           x => _HandleNotParsedFunc(x));
 
             return result;
         }
 
-        private IResult _HandleNotParsedFunc(IEnumerable<Error> x)
+        private Result _HandleParsed(dynamic command)
         {
-            return new Result {Success = false };
+            var handler = _commandToHandlerMap[command.GetType()];
+            return handler.Handle(command);
         }
 
-        private IResult _HandleParsed(dynamic x)
+        private static Result _HandleNotParsedFunc(IEnumerable<Error> x)
         {
-            var handler = _commandToHandlerMap[x.GetType()];
-            return handler.Handle(x);
+            return new Result { Success = false };
         }
+
     }
 }

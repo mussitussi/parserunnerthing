@@ -8,7 +8,7 @@ namespace ParseMeToo.Messages
 
     public class CommitHandler : ICommandHandler<Commit>
     {
-        public IResult Handle(Commit command)
+        public Result Handle(Commit command)
         {
             var txt = command.GetType().Name + ": " + JsonSerializer.Serialize(command);
             Console.WriteLine("Handling: " + txt);

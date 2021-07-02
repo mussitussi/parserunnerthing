@@ -14,7 +14,8 @@ namespace ParseMeToo
             grr.Add(new CommitHandler());
             grr.Add(new AddHandler());
 
-            var result = grr.RunMe(args);
+            Result result = grr.RunMe(args);
+
             Console.WriteLine($"result = {JsonSerializer.Serialize(result)}");
         }
     }

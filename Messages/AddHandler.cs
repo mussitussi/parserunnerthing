@@ -6,7 +6,7 @@ namespace ParseMeToo.Messages
 {
     public class AddHandler : ICommandHandler<Add> 
     {
-        public IResult Handle(Add command)
+        public Result Handle(Add command)
         {
             var txt = command.GetType().Name + ": " + JsonSerializer.Serialize(command);
             Console.WriteLine(txt);
