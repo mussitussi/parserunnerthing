@@ -4,8 +4,6 @@ using ParseMeToo.Infrastructure;
 
 namespace ParseMeToo.Messages
 {
-
-
     public class CommitHandler : ICommandHandler<Commit>
     {
         public Result Handle(Commit command)

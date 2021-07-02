@@ -1,7 +1,7 @@
 using System;
-using CommandLine;
 using System.Collections.Generic;
 using System.Linq;
+using CommandLine;
 
 namespace ParseMeToo.Infrastructure
 {
@@ -36,6 +36,5 @@ namespace ParseMeToo.Infrastructure
         {
             return new Result { Success = false };
         }
-
     }
 }

@@ -4,10 +4,4 @@ namespace ParseMeToo.Infrastructure
     {
         Result Handle(T command);
     }
-    
-
-    public class Result
-    {
-        public bool Success { get; set; }
-    }
 }

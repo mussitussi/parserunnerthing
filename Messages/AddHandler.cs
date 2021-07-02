@@ -1,6 +1,6 @@
 using System;
-using ParseMeToo.Infrastructure;
 using System.Text.Json;
+using ParseMeToo.Infrastructure;
 
 namespace ParseMeToo.Messages
 {
